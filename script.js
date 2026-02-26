@@ -1,6 +1,8 @@
 const form = document.getElementById("checkInForm");
 const nameInput = document.getElementById("attendeeName");
 const teamSelect = document.getElementById("teamSelect");
+const attendeeCount = document.getElementById("attendeeCount");
+const progressBar = document.getElementById("progressBar");
 const customAlert = document.getElementById("customAlert");
 const customAlertMessage = document.getElementById("customAlertMessage");
 const customAlertClose = document.getElementById("customAlertClose");
@@ -51,8 +53,12 @@ form.addEventListener("submit", function (event) {
   count++;
   console.log("Total check-ins:", count);
 
+  attendeeCount.textContent = count;
+
   const percentage = Math.round((count / maxCount) * 100);
   console.log("Progress: " + percentage + "%");
+
+  progressBar.style.width = `${percentage}%`;
 
   // update team counter
 
