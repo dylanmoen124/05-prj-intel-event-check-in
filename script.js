@@ -8,6 +8,8 @@ const greeting = document.getElementById("greeting");
 const waterCountElement = document.getElementById("waterCount");
 const zeroCountElement = document.getElementById("zeroCount");
 const powerCountElement = document.getElementById("powerCount");
+const attendeeList = document.getElementById("attendeeList");
+const attendeeListEmpty = document.getElementById("attendeeListEmpty");
 const customAlert = document.getElementById("customAlert");
 const customAlertMessage = document.getElementById("customAlertMessage");
 const customAlertClose = document.getElementById("customAlertClose");
@@ -19,6 +21,9 @@ const totalCountStorageKey = "intelCheckInTotalCount";
 const waterCountStorageKey = "intelCheckInWaterCount";
 const zeroCountStorageKey = "intelCheckInZeroCount";
 const powerCountStorageKey = "intelCheckInPowerCount";
+const attendeeRecordsStorageKey = "intelCheckInAttendeeRecords";
+const oneTimeResetDoneStorageKey = "intelCheckInOneTimeResetDone";
+let attendeeRecords = [];
 
 // Topic: Show a success message (custom popup)
 
@@ -30,6 +35,22 @@ function showCustomAlert(message) {
 
 function hideCustomAlert() {
   customAlert.classList.remove("show");
+}
+
+// Topic: One-time reset of saved check-in data
+function clearSavedDataOneTime() {
+  const hasResetAlready = localStorage.getItem(oneTimeResetDoneStorageKey);
+
+  if (hasResetAlready === "true") {
+    return;
+  }
+
+  localStorage.removeItem(totalCountStorageKey);
+  localStorage.removeItem(waterCountStorageKey);
+  localStorage.removeItem(zeroCountStorageKey);
+  localStorage.removeItem(powerCountStorageKey);
+  localStorage.removeItem(attendeeRecordsStorageKey);
+  localStorage.setItem(oneTimeResetDoneStorageKey, "true");
 }
 
 // Topic: Read a number from local storage
@@ -69,6 +90,59 @@ function loadAttendanceData() {
   powerCountElement.textContent = getStoredNumber(powerCountStorageKey, 0);
 
   updateProgressBarFromCount();
+}
+
+// Topic: Render attendee list from records
+function renderAttendeeList() {
+  attendeeList.innerHTML = "";
+
+  if (attendeeRecords.length === 0) {
+    attendeeListEmpty.style.display = "block";
+    return;
+  }
+
+  attendeeListEmpty.style.display = "none";
+
+  for (let i = attendeeRecords.length - 1; i >= 0; i--) {
+    const attendeeRecord = attendeeRecords[i];
+    const attendeeListItem = document.createElement("li");
+    attendeeListItem.classList.add("attendee-list-item");
+    attendeeListItem.innerHTML = `<span class="attendee-list-name">${attendeeRecord.name}</span><span class="attendee-list-team">${attendeeRecord.team}</span>`;
+    attendeeList.appendChild(attendeeListItem);
+  }
+}
+
+// Topic: Save attendee records to local storage
+function saveAttendeeRecords() {
+  localStorage.setItem(
+    attendeeRecordsStorageKey,
+    JSON.stringify(attendeeRecords),
+  );
+}
+
+// Topic: Load attendee records from local storage
+function loadAttendeeRecords() {
+  const storedRecords = localStorage.getItem(attendeeRecordsStorageKey);
+
+  if (!storedRecords) {
+    attendeeRecords = [];
+    renderAttendeeList();
+    return;
+  }
+
+  try {
+    const parsedRecords = JSON.parse(storedRecords);
+
+    if (Array.isArray(parsedRecords)) {
+      attendeeRecords = parsedRecords;
+    } else {
+      attendeeRecords = [];
+    }
+  } catch (error) {
+    attendeeRecords = [];
+  }
+
+  renderAttendeeList();
 }
 
 // Topic: Find the winning team at goal (supports ties)
@@ -121,7 +195,9 @@ function showGoalCelebration() {
   greeting.style.display = "block";
 }
 
+clearSavedDataOneTime();
 loadAttendanceData();
+loadAttendeeRecords();
 
 customAlertClose.addEventListener("click", function () {
   hideCustomAlert();
@@ -170,8 +246,13 @@ form.addEventListener("submit", function (event) {
   const teamCounter = document.getElementById(team + "Count");
   teamCounter.textContent = parseInt(teamCounter.textContent) + 1;
 
+  // Topic: Record attendee name and team
+  attendeeRecords.push({ name: name, team: teamName });
+  renderAttendeeList();
+
   // Topic: Save counts so they persist after refresh
   saveAttendanceData();
+  saveAttendeeRecords();
 
   // Topic: Combine a name and team into a welcome message
   const message = `Welcome, ${name} from ${teamName}! You have successfully checked in.`;
