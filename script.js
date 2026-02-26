@@ -5,6 +5,9 @@ const teamSelect = document.getElementById("teamSelect");
 const attendeeCount = document.getElementById("attendeeCount");
 const progressBar = document.getElementById("progressBar");
 const greeting = document.getElementById("greeting");
+const waterCountElement = document.getElementById("waterCount");
+const zeroCountElement = document.getElementById("zeroCount");
+const powerCountElement = document.getElementById("powerCount");
 const customAlert = document.getElementById("customAlert");
 const customAlertMessage = document.getElementById("customAlertMessage");
 const customAlertClose = document.getElementById("customAlertClose");
@@ -12,6 +15,10 @@ const customAlertClose = document.getElementById("customAlertClose");
 // Topic: Track attendance data
 let count = 0;
 const maxCount = 50;
+const totalCountStorageKey = "intelCheckInTotalCount";
+const waterCountStorageKey = "intelCheckInWaterCount";
+const zeroCountStorageKey = "intelCheckInZeroCount";
+const powerCountStorageKey = "intelCheckInPowerCount";
 
 // Topic: Show a success message (custom popup)
 
@@ -25,15 +32,50 @@ function hideCustomAlert() {
   customAlert.classList.remove("show");
 }
 
+// Topic: Read a number from local storage
+function getStoredNumber(storageKey, fallbackNumber) {
+  const storedValue = localStorage.getItem(storageKey);
+  const parsedNumber = parseInt(storedValue);
+
+  if (Number.isNaN(parsedNumber)) {
+    return fallbackNumber;
+  }
+
+  return parsedNumber;
+}
+
+// Topic: Update the progress bar from current count
+function updateProgressBarFromCount() {
+  const percentage = Math.round((count / maxCount) * 100);
+  const cappedPercentage = Math.min(percentage, 100);
+  progressBar.style.width = `${cappedPercentage}%`;
+}
+
+// Topic: Save attendance data to local storage
+function saveAttendanceData() {
+  localStorage.setItem(totalCountStorageKey, count);
+  localStorage.setItem(waterCountStorageKey, waterCountElement.textContent);
+  localStorage.setItem(zeroCountStorageKey, zeroCountElement.textContent);
+  localStorage.setItem(powerCountStorageKey, powerCountElement.textContent);
+}
+
+// Topic: Load attendance data from local storage
+function loadAttendanceData() {
+  count = getStoredNumber(totalCountStorageKey, 0);
+  attendeeCount.textContent = count;
+
+  waterCountElement.textContent = getStoredNumber(waterCountStorageKey, 0);
+  zeroCountElement.textContent = getStoredNumber(zeroCountStorageKey, 0);
+  powerCountElement.textContent = getStoredNumber(powerCountStorageKey, 0);
+
+  updateProgressBarFromCount();
+}
+
 // Topic: Find the winning team at goal (supports ties)
 function getWinningTeamNames() {
-  const waterCount = parseInt(
-    document.getElementById("waterCount").textContent,
-  );
-  const zeroCount = parseInt(document.getElementById("zeroCount").textContent);
-  const powerCount = parseInt(
-    document.getElementById("powerCount").textContent,
-  );
+  const waterCount = parseInt(waterCountElement.textContent);
+  const zeroCount = parseInt(zeroCountElement.textContent);
+  const powerCount = parseInt(powerCountElement.textContent);
 
   const highestCount = Math.max(waterCount, zeroCount, powerCount);
   const winningTeams = [];
@@ -79,6 +121,8 @@ function showGoalCelebration() {
   greeting.style.display = "block";
 }
 
+loadAttendanceData();
+
 customAlertClose.addEventListener("click", function () {
   hideCustomAlert();
 });
@@ -119,12 +163,15 @@ form.addEventListener("submit", function (event) {
   console.log("Progress: " + percentage + "%");
 
   // Topic: Update the width of a progress bar using a percentage
-  progressBar.style.width = `${percentage}%`;
+  updateProgressBarFromCount();
 
   // Topic: Update the correct team's count on the page
 
   const teamCounter = document.getElementById(team + "Count");
   teamCounter.textContent = parseInt(teamCounter.textContent) + 1;
+
+  // Topic: Save counts so they persist after refresh
+  saveAttendanceData();
 
   // Topic: Combine a name and team into a welcome message
   const message = `Welcome, ${name} from ${teamName}! You have successfully checked in.`;
