@@ -348,6 +348,48 @@ select {
   color: #475569;
 }
 
+/* Custom alert modal */
+.custom-alert {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.custom-alert.show {
+  display: flex;
+}
+
+.custom-alert-box {
+  width: 100%;
+  max-width: 420px;
+  background-color: white;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 5px 24px rgba(0, 60, 116, 0.15);
+  text-align: center;
+}
+
+.custom-alert-box h2 {
+  color: #003c71;
+  margin-bottom: 12px;
+  font-size: 24px;
+}
+
+.custom-alert-box p {
+  color: #334155;
+  margin-bottom: 18px;
+  font-size: 17px;
+}
+
+#customAlertClose {
+  margin: 0 auto;
+}
+
 /* Mobile responsive */
 @media (max-width: 768px) {
   .hero {
