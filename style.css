@@ -1,4 +1,4 @@
-/* Modern reset */
+/* Topic: Modern reset */
 * {
   margin: 0;
   padding: 0;
@@ -13,7 +13,7 @@ body {
   min-height: 100vh;
 }
 
-/* Add form label styling */
+/* Topic: Form label styling */
 .form-label {
   display: block;
   text-align: left;
@@ -23,9 +23,10 @@ body {
   font-weight: 500;
 }
 
-/* Hero Section */
+/* Topic: Hero section */
 .hero {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       135deg,
       rgba(0, 153, 219, 0.9) 0%,
       rgba(0, 104, 181, 0.9) 50%,
@@ -75,7 +76,7 @@ body {
   color: white;
 }
 
-/* Main container */
+/* Topic: Main container */
 .container {
   max-width: 700px;
   width: 90%;
@@ -87,7 +88,7 @@ body {
   text-align: center;
 }
 
-/* Check-in form */
+/* Topic: Check-in form */
 .check-in {
   width: 100%;
   margin: 0 auto;
@@ -103,7 +104,7 @@ body {
   width: 100%;
 }
 
-/* Form elements */
+/* Topic: Form elements */
 input {
   flex: 1;
   padding: 16px 20px;
@@ -152,7 +153,7 @@ button:hover {
   white-space: nowrap;
 }
 
-/* Icon spacing */
+/* Topic: Icon spacing */
 .fas {
   margin-right: 8px;
 }
@@ -167,7 +168,7 @@ button .fas {
   margin-right: 8px;
 }
 
-/* Attendance section spacing */
+/* Topic: Attendance section spacing */
 .attendance-header {
   display: flex;
   align-items: center;
@@ -178,7 +179,7 @@ button .fas {
   color: #64748b;
 }
 
-/* Attendance tracker styling */
+/* Topic: Attendance tracker styling */
 .attendance-tracker {
   max-width: 700px;
   width: 90%;
@@ -210,13 +211,13 @@ button .fas {
   margin-right: 4px;
 }
 
-/* Max attendees text */
+/* Topic: Max attendees text */
 .attendance-header span:last-child {
   color: #64748b;
   font-size: 17px;
 }
 
-/* Progress container - simplified */
+/* Topic: Progress bar container */
 .progress-container {
   width: 100%;
   max-width: 500px;
@@ -237,12 +238,12 @@ button .fas {
   transition: width 0.6s ease;
 }
 
-/* Adjust spacing between components */
+/* Topic: Component spacing adjustments */
 .container {
   margin-top: 0;
 }
 
-/* Messages */
+/* Topic: Messages */
 #greeting {
   font-weight: 500;
   font-size: 18px;
@@ -258,7 +259,7 @@ button .fas {
   color: #003c71;
 }
 
-/* Counter */
+/* Topic: Counter */
 #attendeeCount {
   color: #0071c5;
   font-size: 24px;
@@ -266,7 +267,7 @@ button .fas {
   margin: 0 2px;
 }
 
-/* Footer */
+/* Topic: Footer */
 .footer {
   text-align: center;
   padding: 40px 20px;
@@ -284,7 +285,7 @@ button .fas {
   text-decoration: underline;
 }
 
-/* Input wrapper for name and team select */
+/* Topic: Input wrapper for name and team select */
 .input-wrapper {
   flex: 1;
   display: flex;
@@ -304,7 +305,7 @@ select {
   min-width: 140px;
 }
 
-/* Team Stats */
+/* Topic: Team stats */
 .team-stats {
   margin-top: 30px;
   padding-top: 30px;
@@ -331,7 +332,7 @@ select {
   gap: 5px;
 }
 
-/* Team card colors */
+/* Topic: Team card colors */
 .team-card.water {
   background-color: #e8f7fc;
 }
@@ -348,7 +349,7 @@ select {
   color: #475569;
 }
 
-/* Custom alert modal */
+/* Topic: Custom alert modal */
 .custom-alert {
   position: fixed;
   inset: 0;
@@ -390,7 +391,7 @@ select {
   margin: 0 auto;
 }
 
-/* Mobile responsive */
+/* Topic: Mobile responsive styles */
 @media (max-width: 768px) {
   .hero {
     padding: 35px 20px;

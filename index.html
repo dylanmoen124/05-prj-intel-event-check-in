@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Intel Sustainability Summit Check-In</title>
-    <!-- Add Font Awesome CSS -->
+    <!-- Topic: External icon library -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- Hero section with Intel branding -->
+    <!-- Topic: Hero section with Intel branding -->
     <div class="hero">
       <div class="hero-content">
         <img src="img/intel-logo.svg" alt="Intel Logo" class="intel-logo" />
@@ -24,7 +24,7 @@
         </p>
       </div>
     </div>
-    <!-- Attendance tracking -->
+    <!-- Topic: Attendance tracking -->
     <div class="attendance-tracker">
       <div class="attendance-header">
         <i class="fas fa-users"></i>
@@ -35,10 +35,10 @@
       </div>
     </div>
     <div class="container">
-      <!-- Feedback message -->
+      <!-- Topic: Feedback message -->
       <p id="greeting"></p>
 
-      <!-- Check-in form -->
+      <!-- Topic: Check-in form -->
       <form class="check-in" id="checkInForm">
         <label for="attendeeName" class="form-label">Attendee Check-In</label>
         <div class="form-group">
@@ -63,7 +63,7 @@
         </div>
       </form>
 
-      <!-- Team stats -->
+      <!-- Topic: Team stats -->
       <div class="team-stats">
         <h3>Team Attendance</h3>
         <div class="teams-grid">
@@ -83,9 +83,14 @@
       </div>
     </div>
 
-    <!-- Custom alert modal -->
+    <!-- Topic: Custom alert modal -->
     <div id="customAlert" class="custom-alert">
-      <div class="custom-alert-box" role="alertdialog" aria-modal="true" aria-labelledby="customAlertTitle">
+      <div
+        class="custom-alert-box"
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="customAlertTitle"
+      >
         <h2 id="customAlertTitle">Event Check-In</h2>
         <p id="customAlertMessage"></p>
         <button type="button" id="customAlertClose">OK</button>
